@@ -11,22 +11,18 @@ seguindo o roteiro de modelagem de Larman (visão, backlog, requisitos, casos de
 GRASP, GoF/SOLID, arquitetura, deployment e testes).
 
 ## Estrutura
-
-```
 .
 ├── docs/
-│   ├── TPE_etapas_13_a_24.md         # Conteúdo das etapas 13 a 24 (contratos, GRASP, GoF/SOLID, etc.)
-│   └── COMO_CRIAR_REPOSITORIO.md     # Passo a passo para publicar este repositório no GitHub
+│ └── TPE_etapas_13_a_24.md # Conteúdo das etapas 13 a 24 (contratos, GRASP, GoF/SOLID, etc.)
 ├── diagramas/
-│   ├── 01_casos_de_uso.puml
-│   ├── 02_atividade_UC03_responder_pesquisa.puml
-│   ├── 03_sequencia_UC03_responder_pesquisa.puml
-│   ├── 04_comunicacao_UC06_registrar_plano_acao.puml
-│   ├── 05_classes_dominio.puml
-│   └── 06_deployment.puml
-├── .github/ISSUE_TEMPLATE/          # Template para abrir uma Issue por história de usuário
-└── TPE_FINAL_*.docx                  # Documento final de entrega (template preenchido)
-```
+│ ├── 01_casos_de_uso.puml
+│ ├── 02_atividade_UC03_responder_pesquisa.puml
+│ ├── 03_sequencia_UC03_responder_pesquisa.puml
+│ ├── 04_comunicacao_UC06_registrar_plano_acao.puml
+│ ├── 05_classes_dominio.puml
+│ └── 06_deployment.puml
+├── .github/ISSUE_TEMPLATE/ # Template para abrir uma Issue por história de usuário
+└── TPE_FINAL_SistemaClimaOrganizacional_HRO_ALVF.docx # Documento final de entrega
 
 ## Correções aplicadas em relação à primeira avaliação
 
@@ -40,6 +36,5 @@ GRASP, GoF/SOLID, arquitetura, deployment e testes).
 
 ## Declaração de uso de IA
 
-Este material foi estruturado com apoio da IA Claude (Anthropic) para organização do documento,
-geração dos códigos PlantUML e revisão técnica dos pontos apontados pelo avaliador. As decisões de
-modelagem de negócio e a revisão final são de responsabilidade do grupo.
+Utilizei apoio de IA na organização do documento e na geração dos diagramas PlantUML, com
+revisão e validação final de minha responsabilidade.
