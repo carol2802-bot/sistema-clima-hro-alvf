@@ -1,0 +1,155 @@
+@startuml
+title Modelo de Classes de Domínio - Sistema de Clima Organizacional HRO/ALVF (revisado)
+skinparam classAttributeIconSize 0
+
+enum StatusCampanha {
+  PLANEJADA
+  PUBLICADA
+  ENCERRADA
+  CONSOLIDADA
+}
+
+enum TipoPergunta {
+  OBJETIVA
+  DISCURSIVA
+}
+
+enum StatusPlanoAcao {
+  ABERTO
+  EM_ANDAMENTO
+  CONCLUIDO
+  CANCELADO
+}
+
+class Usuario {
+  idUsuario : int
+  nome : string
+  email : string
+  status : string
+}
+
+class PerfilAcesso {
+  idPerfil : int
+  nome : string
+}
+
+class Colaborador {
+  idColaborador : int
+  matricula : string
+  nome : string
+}
+
+class Gestor {
+  idGestor : int
+  nome : string
+}
+
+class Setor {
+  idSetor : int
+  nome : string
+}
+
+class Campanha {
+  idCampanha : int
+  titulo : string
+  objetivo : string
+  dataInicio : date
+  dataFim : date
+  status : StatusCampanha
+}
+
+class Questionario {
+  idQuestionario : int
+  titulo : string
+  descricao : string
+}
+
+class Pergunta {
+  idPergunta : int
+  enunciado : string
+  tipo : TipoPergunta
+  obrigatoria : boolean
+}
+
+' CORREÇÃO: separa o registro IDENTIFICADO de participação (quem
+' respondeu, para fins de cálculo de adesão) do conteúdo ANONIMIZADO
+' da resposta em si (o que foi respondido). RespostaPesquisa não possui
+' associação direta com Colaborador — só com Campanha — preservando
+' a confidencialidade descrita em RNF02/RN03.
+class Participacao {
+  idParticipacao : int
+  dataParticipacao : datetime
+}
+
+class RespostaPesquisa {
+  idResposta : int
+  dataEnvio : datetime
+}
+
+class RespostaItem {
+  idRespostaItem : int
+  valor : string
+}
+
+class PainelSetorial {
+  idPainel : int
+  dataGeracao : datetime
+}
+
+class IndicadorClima {
+  idIndicador : int
+  nome : string
+  valor : decimal
+  classificacao : string
+}
+
+class PlanoAcao {
+  idPlano : int
+  descricao : string
+  responsavel : string
+  prazo : date
+  status : StatusPlanoAcao
+}
+
+class RegistroAuditoria {
+  idRegistro : int
+  acao : string
+  dataHora : datetime
+  entidadeAfetada : string
+}
+
+Usuario "1" -- "1" PerfilAcesso : possui
+Usuario <|-- Colaborador
+Usuario <|-- Gestor
+Colaborador "0..*" -- "1" Setor : pertence a
+Gestor "1" -- "1..*" Setor : gerencia
+
+Campanha "1" -- "1" Questionario : utiliza
+Campanha::status .. StatusCampanha
+Questionario "1" -- "1..*" Pergunta : contém
+Pergunta::tipo .. TipoPergunta
+Campanha "1" -- "0..*" Setor : direciona para
+
+' Participação identificada (adesão) x resposta anonimizada
+Campanha "1" -- "0..*" Participacao : registra
+Colaborador "1" -- "0..1" Participacao : realiza (por campanha)
+Campanha "1" -- "0..*" RespostaPesquisa : recebe
+RespostaPesquisa "1" -- "1..*" RespostaItem : composta por
+RespostaItem "1" -- "1" Pergunta : responde
+
+Campanha "1" -- "0..*" PainelSetorial : gera
+PainelSetorial "1" -- "1" Setor : apresenta resultados de
+PainelSetorial "1" -- "1..*" IndicadorClima : consolida
+IndicadorClima "1" -- "0..*" PlanoAcao : origina
+PlanoAcao::status .. StatusPlanoAcao
+PlanoAcao "0..*" -- "1" Setor : aplicado em
+
+Usuario "1" -- "0..*" RegistroAuditoria : realiza
+
+note bottom of RespostaPesquisa
+  Sem associação com Colaborador: garante anonimização (RNF02).
+  RN03: painel só exibe indicador quando houver quantidade
+  mínima de respostas associadas à campanha/setor.
+end note
+
+@enduml

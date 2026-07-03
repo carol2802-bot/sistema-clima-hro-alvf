@@ -1,0 +1,32 @@
+@startuml
+title Atividade - Responder pesquisa (UC03)
+|Colaborador|
+start
+:Acessar pesquisa de clima;
+|Sistema|
+:Verificar campanha ativa;
+if (Campanha ativa?) then (sim)
+  :Verificar elegibilidade e resposta anterior;
+  if (Pode responder?) then (sim)
+    :Exibir questionário;
+    |Colaborador|
+    :Preencher respostas;
+    :Confirmar envio;
+    |Sistema|
+    :Validar obrigatórias;
+    if (Tudo preenchido?) then (sim)
+      :Registrar resposta (anonimizada);
+      :Registrar participação (identificada, sem vínculo com conteúdo);
+      :Atualizar adesão;
+      :Exibir confirmação;
+    else (não)
+      :Informar pendências;
+    endif
+  else (não)
+    :Bloquear envio e informar motivo;
+  endif
+else (não)
+  :Informar pesquisa indisponível;
+endif
+stop
+@enduml

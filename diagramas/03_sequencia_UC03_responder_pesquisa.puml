@@ -1,0 +1,29 @@
+@startuml
+title Sequência - Responder pesquisa (UC03)
+actor Colaborador
+boundary TelaPesquisa
+control PesquisaController
+control RespostaService
+entity Campanha
+entity Participacao
+entity RespostaPesquisa
+collections RespostaRepository
+
+Colaborador -> TelaPesquisa : acessarPesquisa(idCampanha)
+TelaPesquisa -> PesquisaController : carregarPesquisa(idCampanha, idColaborador)
+PesquisaController -> RespostaService : verificarElegibilidade(idCampanha, idColaborador)
+RespostaService -> Campanha : estaAtiva()
+RespostaService -> RespostaRepository : existeParticipacao(idCampanha, idColaborador)
+RespostaService --> PesquisaController : questionarioDisponivel
+PesquisaController --> TelaPesquisa : exibirQuestionario()
+
+Colaborador -> TelaPesquisa : enviarRespostas(dados)
+TelaPesquisa -> PesquisaController : registrarResposta(dados)
+PesquisaController -> RespostaService : registrarResposta(dados)
+RespostaService -> Participacao : criar(idCampanha, idColaborador)
+RespostaService -> RespostaPesquisa : criar(dadosAnonimizados)
+RespostaService -> RespostaRepository : salvar(participacao, resposta)
+RespostaService -> Campanha : atualizarAdesao()
+RespostaService --> PesquisaController : respostaRegistrada
+PesquisaController --> TelaPesquisa : exibirConfirmacao()
+@enduml

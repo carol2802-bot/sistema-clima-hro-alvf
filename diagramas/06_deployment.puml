@@ -1,0 +1,42 @@
+@startuml
+title Diagrama de Implantação - Sistema de Clima Organizacional HRO/ALVF
+
+node "Cliente Web" as ClienteWeb {
+  artifact "SPA (navegador)" as SPA
+}
+
+node "Cliente Mobile" as ClienteMobile {
+  artifact "App (colaborador)" as App
+}
+
+cloud "Balanceador de Carga / API Gateway" as Gateway
+
+node "Servidor de Aplicação" as AppServer {
+  artifact "API REST\n(Controllers/Services)" as API
+}
+
+node "Servidor de Autenticação" as AuthServer {
+  artifact "SSO / Diretório de Usuários" as SSO
+}
+
+database "Banco de Dados Relacional" as DB {
+  artifact "Campanhas, Respostas,\nPainéis, Planos de Ação" as Dados
+}
+
+node "Serviço de Notificação" as NotifServer {
+  artifact "E-mail / Lembretes" as Notif
+}
+
+node "Serviço de Auditoria" as AuditServer {
+  artifact "Log estruturado" as Audit
+}
+
+ClienteWeb --> Gateway : HTTPS
+ClienteMobile --> Gateway : HTTPS
+Gateway --> AppServer : HTTPS
+AppServer --> AuthServer : valida perfil/token
+AppServer --> DB : JDBC/ORM
+AppServer --> NotifServer : dispara lembretes (HU08)
+AppServer --> AuditServer : envia eventos (RF08/RNF03)
+
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+title Diagrama de Casos de Uso - Sistema de Clima Organizacional HRO/ALVF
+left to right direction
+
+actor "RH" as RH
+actor "Colaborador" as Colaborador
+actor "Gestor de Setor" as Gestor
+actor "Direção Executiva" as Direcao
+actor "Administrador" as Admin
+actor "Auditor" as Auditor
+
+rectangle "Sistema de Clima Organizacional" {
+  usecase "Planejar campanha\nde clima" as UC01
+  usecase "Cadastrar\nquestionário" as UC02
+  usecase "Responder\npesquisa" as UC03
+  usecase "Monitorar\nadesão" as UC04
+  usecase "Consultar painel\nsetorial" as UC05
+  usecase "Registrar plano\nde ação" as UC06
+  usecase "Consultar painel\nexecutivo" as UC07
+  usecase "Consultar\nauditoria" as UC08
+  usecase "Gerenciar perfis\nde acesso" as UC09
+}
+
+RH --> UC01
+RH --> UC02
+RH --> UC04
+Colaborador --> UC03
+Gestor --> UC05
+Gestor --> UC06
+Direcao --> UC07
+Auditor --> UC08
+Admin --> UC09
+
+UC01 ..> UC02 : <<include>>
+
+' CORREÇÃO (avaliação Radamés Pereira):
+' A extensão deve apontar do caso de uso estendido (UC06) para o caso
+' de uso base (UC05), e não o contrário. Além disso, toda relação
+' <<extend>> precisa declarar um ponto de extensão explícito, pois
+' "registrar plano de ação" só ocorre sob a condição de existir um
+' indicador crítico no painel — não é executado em toda consulta.
+UC06 ..> UC05 : <<extend>>
+note right of UC06
+  Ponto de extensão: "indicador crítico identificado"
+  Condição: ao consultar o painel setorial (UC05), se algum
+  IndicadorClima estiver classificado como crítico, o gestor
+  pode opcionalmente disparar UC06 a partir desse ponto.
+end note
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+title Comunicação - Registrar plano de ação (UC06)
+object Gestor
+object TelaPainel
+object PlanoAcaoController
+object PlanoAcaoService
+object PainelSetorial
+object PlanoAcao
+object PlanoAcaoRepository
+
+Gestor -- TelaPainel : 1: selecionarPontoMelhoria()
+TelaPainel -- PlanoAcaoController : 2: solicitarCadastro(dados)
+PlanoAcaoController -- PlanoAcaoService : 3: registrarPlano(dados)
+PlanoAcaoService -- PainelSetorial : 4: verificarPermissaoEIndicador()
+PlanoAcaoService -- PlanoAcao : 5: criar(dados, status=ABERTO)
+PlanoAcaoService -- PlanoAcaoRepository : 6: salvar(plano)
+PlanoAcaoController -- TelaPainel : 7: exibirConfirmacao()
+@enduml
