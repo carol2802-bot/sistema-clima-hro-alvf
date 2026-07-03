@@ -132,7 +132,7 @@ Conforme indicação do roteiro, o modelo relacional não é exigido nesta etapa
 
 O preenchimento do TPE cobriu o ciclo completo do Sistema de Clima Organizacional do HRO/ALVF, da visão de produto ao modelo de implantação, seguindo o roteiro de Larman e a notação UML. As correções identificadas na primeira revisão foram tratadas: (1) a relação `<<extend>>` entre UC05 e UC06 foi corrigida quanto à direção da seta e passou a declarar um ponto de extensão explícito; (2) o modelo de classes de domínio passou a explicitar enumerações (`StatusCampanha`, `TipoPergunta`, `StatusPlanoAcao`) e a separar o registro identificado de participação (`Participacao`) do conteúdo anonimizado da resposta (`RespostaPesquisa`/`RespostaItem`); (3) o repositório passou a ter evidência real de versionamento (commits, issues, branches e release), tratando a lacuna apontada na avaliação.
 
-Como próximos passos, o grupo pretende: implementar um protótipo mínimo (API + persistência) cobrindo UC01, UC03 e UC06; escrever testes automatizados a partir da seção 21; e evoluir o modelo relacional (seção 20) quando essa etapa for solicitada pelo roteiro.
+Como próximos passos, pretendo: implementar um protótipo mínimo (API + persistência) cobrindo UC01, UC03 e UC06; escrever testes automatizados a partir da seção 21; e evoluir o modelo relacional (seção 20) quando essa etapa for solicitada pelo roteiro.
 
 ---
 
